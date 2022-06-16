@@ -8,6 +8,7 @@ import (
 type Container struct{}
 
 func (c *Container) GetContainer(w http.ResponseWriter, r *http.Request) {
+	panic("implement me")
 	fmt.Fprint(w, `[
 							{"title":"Container 1","id":"1", "text":"some text 1", "buttonText": "click me 1"},
 							{"title":"Container 2","id":"2", "text":"some text 2", "buttonText": "click me 2"},
