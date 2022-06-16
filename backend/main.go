@@ -1,12 +1,18 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"github.com/YReshetko/docker-app/backend/internal/http"
+	"github.com/YReshetko/docker-app/backend/internal/http/handlers"
+	http2 "net/http"
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("backend/resources"))
+	r := http.BuildRouteByHandlers(&handlers.Container{}, &handlers.Service{}, &handlers.Containers{})
+	router := http.NewRouter(r[0])
+	http2.ListenAndServe(":8181", router)
+	//fmt.Println(r)
+
+	/*fs := http.FileServer(http.Dir("backend/resources"))
 	http.Handle("/", fs)
 
 	http.HandleFunc("/containers", func(w http.ResponseWriter, r *http.Request) {
@@ -20,5 +26,5 @@ func main() {
 	})
 
 	fmt.Println("Server is listening...")
-	http.ListenAndServe(":8181", nil)
+	http.ListenAndServe(":8181", nil)*/
 }
