@@ -7,8 +7,7 @@ import (
 
 type Container struct{}
 
-func (c *Container) GetContainer(w http.ResponseWriter, r *http.Request) {
-	panic("implement me")
+func (c *Container) getContainer(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, `[
 							{"title":"Container 1","id":"1", "text":"some text 1", "buttonText": "click me 1"},
 							{"title":"Container 2","id":"2", "text":"some text 2", "buttonText": "click me 2"},
@@ -18,7 +17,7 @@ func (c *Container) GetContainer(w http.ResponseWriter, r *http.Request) {
 					]`)
 }
 
-func (c *Container) PatchContainer(w http.ResponseWriter, r *http.Request) {
+func (c *Container) patchContainer(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, `[
 							{"title":"Container 1","id":"1", "text":"some text 1", "buttonText": "click me 1"},
 							{"title":"Container 2","id":"2", "text":"some text 2", "buttonText": "click me 2"},
@@ -28,7 +27,7 @@ func (c *Container) PatchContainer(w http.ResponseWriter, r *http.Request) {
 					]`)
 }
 
-func (c *Container) DeleteContainer(w http.ResponseWriter, r *http.Request) {
+func (c *Container) deleteContainer(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, `[
 							{"title":"Container 1","id":"1", "text":"some text 1", "buttonText": "click me 1"},
 							{"title":"Container 2","id":"2", "text":"some text 2", "buttonText": "click me 2"},
@@ -40,9 +39,9 @@ func (c *Container) DeleteContainer(w http.ResponseWriter, r *http.Request) {
 
 func (c *Container) Handlers() map[string]http.HandlerFunc {
 	return map[string]http.HandlerFunc{
-		http.MethodGet:    c.GetContainer,
-		http.MethodPatch:  c.PatchContainer,
-		http.MethodDelete: c.DeleteContainer,
+		http.MethodGet:    c.getContainer,
+		http.MethodPatch:  c.patchContainer,
+		http.MethodDelete: c.deleteContainer,
 	}
 
 }

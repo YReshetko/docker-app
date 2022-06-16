@@ -7,7 +7,7 @@ import (
 
 type Containers struct{}
 
-func (c *Containers) GetContainers(w http.ResponseWriter, r *http.Request) {
+func (c *Containers) getContainers(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, `[
 							{"title":"Container 1","id":"1", "text":"some text 1", "buttonText": "click me 1"},
 							{"title":"Container 2","id":"2", "text":"some text 2", "buttonText": "click me 2"},
@@ -18,7 +18,7 @@ func (c *Containers) GetContainers(w http.ResponseWriter, r *http.Request) {
 }
 func (c *Containers) Handlers() map[string]http.HandlerFunc {
 	return map[string]http.HandlerFunc{
-		http.MethodGet: c.GetContainers,
+		http.MethodGet: c.getContainers,
 	}
 
 }
