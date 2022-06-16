@@ -10,4 +10,4 @@ build-static:
 .PHONY: run
 run:
 	@echo "Running..."
-	@go run backend/main.go
+	@cd backend && go run main.go

@@ -1,14 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState, useEffect } from 'react'
-import ReactDOM from 'react-dom'
+import React, {useEffect, useState} from 'react'
 import MyCard from "./components/MyCard";
-import {Stack} from "react-bootstrap";
 
 function App() {
     let tempCards = [];
     const [cards, setCards] = useState([]);
     useEffect(() => {
-        fetch("/containers", {
+        fetch("/api/v1/containers", {
             "method": "GET"
         })
             .then(response => response.json())
@@ -22,11 +20,11 @@ function App() {
                 console.log(err);
             });
     }, [])
-  return (
-    <div>
-        {cards}
-    </div>
-  );
+    return (
+        <div>
+            {cards}
+        </div>
+    );
 }
 
 export default App;

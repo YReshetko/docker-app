@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/YReshetko/docker-app/backend/internal/http"
 	"github.com/YReshetko/docker-app/backend/internal/http/handlers"
 	http2 "net/http"
@@ -8,23 +9,19 @@ import (
 
 func main() {
 	r := http.BuildRouteByHandlers(&handlers.Container{}, &handlers.Service{}, &handlers.Containers{})
-	router := http.NewRouter(r[0])
-	http2.ListenAndServe(":8181", router)
-	//fmt.Println(r)
-
-	/*fs := http.FileServer(http.Dir("backend/resources"))
-	http.Handle("/", fs)
-
-	http.HandleFunc("/containers", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, `[
-							{"title":"Container 1","id":"1", "text":"some text 1", "buttonText": "click me 1"},
-							{"title":"Container 2","id":"2", "text":"some text 2", "buttonText": "click me 2"},
-							{"title":"Container 3","id":"3", "text":"some text 3", "buttonText": "click me 3"},
-							{"title":"Container 4","id":"4", "text":"some text 4", "buttonText": "click me 4"},
-							{"title":"Container 5","id":"5", "text":"some text 5", "buttonText": "click me 5"}
-					]`)
+	router := http.NewRouter(r[0], http2.FileServer(http2.Dir("resources")))
+	http.Middlewares(router, func(handler http2.Handler) http2.Handler {
+		return http2.HandlerFunc(func(w http2.ResponseWriter, r *http2.Request) {
+			fmt.Println("1", r.URL.Path)
+			handler.ServeHTTP(w, r)
+		})
+	}, func(handler http2.Handler) http2.Handler {
+		return http2.HandlerFunc(func(w http2.ResponseWriter, r *http2.Request) {
+			fmt.Println("2", r.URL.Path)
+			handler.ServeHTTP(w, r)
+		})
 	})
 
-	fmt.Println("Server is listening...")
-	http.ListenAndServe(":8181", nil)*/
+	fmt.Println("Serving: http://localhost:8181")
+	http2.ListenAndServe(":8181", router)
 }

@@ -1,7 +1,7 @@
 import {Button, Badge, Card} from 'react-bootstrap';
 
 function MyCard(props) {
-    return (<Card style={{width: '18rem'}} className="g-3">
+    return (<Card style={{width: '18rem', display: "inline-block"}} className="g-3">
             <Card.Header>{props.title}</Card.Header>
             <Card.Body>
                 {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>*/}

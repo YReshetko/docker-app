@@ -1,14 +1,11 @@
 package http
 
 import (
-	"github.com/gorilla/mux"
 	"net/http"
 	"strings"
-)
 
-type Routing struct {
-	router *mux.Router
-}
+	"github.com/gorilla/mux"
+)
 
 type Route struct {
 	Path      string
@@ -16,9 +13,31 @@ type Route struct {
 	Handlers  map[string]http.HandlerFunc
 }
 
-func NewRouter(route Route) http.Handler {
+func NewRouter(route Route, static http.Handler) *mux.Router {
 	router := mux.NewRouter()
 	buildRoute(router, route)
+	router.PathPrefix("/").Handler(static).Methods(http.MethodGet)
+	return router
+}
+
+func Middlewares(router *mux.Router, middlewareFuncs ...mux.MiddlewareFunc) *mux.Router {
+	_ = router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
+
+		for _, middlewareFunc := range middlewareFuncs {
+			route.Handler(middlewareFunc(route.GetHandler()))
+		}
+		return nil
+	})
+	/*
+		_ = router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
+			p, _ := route.GetPathTemplate()
+			m, _ := route.GetMethods()
+			h := route.GetHandler()
+			fmt.Println(p, m, h)
+			return nil
+		})
+	*/
+
 	return router
 }
 
@@ -29,7 +48,7 @@ func buildRoute(router *mux.Router, route Route) {
 		buildRoute(r, subRoute)
 	}
 	for method, handler := range route.Handlers {
-		r.Handle("/", handler).Methods(method)
+		r.Handle("", handler).Methods(method)
 	}
 }
 
