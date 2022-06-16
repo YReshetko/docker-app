@@ -2,10 +2,10 @@
 build-static:
 	@echo "Building static library..."
 	@rm -rf frontend/build
-	@rm -rf backend/resources
-	@mkdir -p backend/resources
+	@rm -rf backend/web
+	@mkdir -p backend/web
 	@npm --prefix ./frontend/ run build
-	@cp -r frontend/build/. backend/resources/
+	@cp -r frontend/build/. backend/web/
 
 .PHONY: run
 run:
