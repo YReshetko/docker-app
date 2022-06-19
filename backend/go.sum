@@ -1,2 +1,6 @@
+github.com/YReshetko/go-annotation v0.0.6 h1:XIHIBfpeIbgvj+t1+esVMuaxyLX9vBLbzQELsW2In9A=
+github.com/YReshetko/go-annotation v0.0.6/go.mod h1:iyuHDJ3kPZMtQ3A0Ubm2CXLgqZxTo38sY7VL+B9HvrA=
+github.com/YReshetko/go-annotation/annotations/rest v0.0.7 h1:1pzvOQOdkzpreMN399dWr9x7WInN6Y1/yTlSjc03pQ4=
+github.com/YReshetko/go-annotation/annotations/rest v0.0.7/go.mod h1:fgecKtOehgReGJW0fDT1R9UjGUGMtRNXqJJHlR6DDbo=
 github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
