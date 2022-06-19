@@ -12,5 +12,11 @@ run:
 	@echo "Running..."
 	@cd backend && go run cmd/app/main.go
 
+
+.PHONY: generate
+generate:
+	@echo "Generating..."
+	@cd backend && go generate ./...
+
 .PHONY: re-build
 re-build: build-static run
