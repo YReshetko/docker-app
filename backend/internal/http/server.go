@@ -18,32 +18,6 @@ type Server struct {
 	port            string
 }
 
-type ServerOption func(*Server)
-
-func WithHandler(handler routing.Handler) ServerOption {
-	return func(s *Server) {
-		s.handlers = append(s.handlers, handler)
-	}
-}
-
-func WithMiddleware(middleware mux.MiddlewareFunc) ServerOption {
-	return func(s *Server) {
-		s.middlewares = append(s.middlewares, middleware)
-	}
-}
-
-func WithStaticResource(path string) ServerOption {
-	return func(s *Server) {
-		s.staticResources = path
-	}
-}
-
-func WithPort(port string) ServerOption {
-	return func(s *Server) {
-		s.port = port
-	}
-}
-
 func NewServer(options ...ServerOption) *Server {
 	s := &Server{
 		port: defaultPort,
@@ -69,6 +43,32 @@ func (s *Server) Serve() {
 	err := http.ListenAndServe(":"+s.port, router)
 	if err != nil {
 		panic(err)
+	}
+}
+
+type ServerOption func(*Server)
+
+func WithHandler(handler routing.Handler) ServerOption {
+	return func(s *Server) {
+		s.handlers = append(s.handlers, handler)
+	}
+}
+
+func WithMiddleware(middleware mux.MiddlewareFunc) ServerOption {
+	return func(s *Server) {
+		s.middlewares = append(s.middlewares, middleware)
+	}
+}
+
+func WithStaticResource(path string) ServerOption {
+	return func(s *Server) {
+		s.staticResources = path
+	}
+}
+
+func WithPort(port string) ServerOption {
+	return func(s *Server) {
+		s.port = port
 	}
 }
 
