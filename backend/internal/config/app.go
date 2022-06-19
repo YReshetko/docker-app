@@ -12,6 +12,8 @@ const (
 	DYNAMIC ItemType = "DYNAMIC"
 )
 
+type ConfigMap map[string]interface{}
+
 type App struct {
 	Workspaces    []Workspace   `json:"workspaces"`
 	Services      []Service     `json:"services"`
@@ -25,15 +27,18 @@ type Workspace struct {
 type ServiceGroups map[string][]Service
 
 type Service struct {
-	ItemType        string          `json:"item_type"`
-	DockerConfig    DockerConfig    `json:"docker_config"`
-	GitConfig       GitConfig       `json:"git_config"`
-	LocalRepoConfig LocalRepoConfig `json:"local_repo_config"`
+	Name            string           `json:"name"`
+	ItemType        ItemType         `json:"item_type"`
+	DockerConfig    *DockerConfig    `json:"docker_config,omitempty"`
+	GitConfig       *GitConfig       `json:"git_config,omitempty"`
+	LocalRepoConfig *LocalRepoConfig `json:"local_repo_config,omitempty"`
 }
 type DockerConfig struct {
-	ImageTag      string `json:"image_tag"`
-	ContainerName string `json:"container_name"`
-	BuildCommand  string `json:"build_command"`
+	Image          string    `json:"image"`
+	ContainerName  string    `json:"container_name"`
+	ComposeSnippet string    `json:"compose_snippet"`
+	ConfigMap      ConfigMap `json:"config_map"`
+	//BuildCommand  string   `json:"build_command"`
 }
 
 type GitConfig struct {

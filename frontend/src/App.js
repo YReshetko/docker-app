@@ -1,28 +1,30 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, {useEffect, useState} from 'react'
-import MyCard from "./components/MyCard";
+import React, {useMemo, useState} from 'react'
+import Services from "./components/Services";
 
 function App() {
-    let tempCards = [];
-    const [cards, setCards] = useState([]);
-    useEffect(() => {
-        fetch("/api/v1/containers", {
+    console.log("Starting app")
+    const [services, setServices] = useState([]);
+    let fetchState = 0;
+
+    useMemo(() => {
+        console.log("Fetching services")
+        fetch("/api/v1/services", {
             "method": "GET"
         })
             .then(response => response.json())
             .then(response => {
-                for (let i = 0; i < response.length; i++) {
-                    tempCards.push(MyCard(response[i]));
-                    setCards([...tempCards]);
-                }
+                setServices(Services(response));
             })
             .catch(err => {
                 console.log(err);
             });
-    }, [])
+    }, [fetchState]);
+    fetchState = 1;
+
     return (
         <div>
-            {cards}
+            {services}
         </div>
     );
 }

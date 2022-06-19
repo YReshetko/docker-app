@@ -1,0 +1,166 @@
+{
+  "workspaces": [
+    {
+      "name": "Experiment",
+      "path": "/home/yury/experiments/workspace"
+    },
+    {
+      "name": "Development",
+      "path": "/home/yury/experiments/development"
+    }
+  ],
+  "service_groups": {
+    "infrastructure": [
+      {
+        "name": "Loki",
+        "item_type": "STATIC",
+        "docker_config": {
+          "image": "loki/loki",
+          "container_name": "loki_2",
+          "compose_snippet": "",
+          "config_map": {}
+        }
+      },
+      {
+        "name": "Grafana",
+        "item_type": "STATIC",
+        "docker_config": {
+          "image": "loki/loki",
+          "container_name": "loki_2",
+          "compose_snippet": "",
+          "config_map": {}
+        }
+      }
+    ],
+    "backend": [
+      {
+        "name": "svc-api-1",
+        "item_type": "DYNAMIC",
+        "docker_config": {
+          "image": "svc-api-1:latest",
+          "container_name": "svc-api-1",
+          "compose_snippet": "",
+          "config_map": {}
+        },
+        "git_config": {
+          "repo": "git@github.com:YReshetko/interview-tasks.git"
+        },
+        "local_repo_config": {
+          "locations": [
+            {
+              "name": "development",
+              "path": "/home/yury/go/src/github.com/YReshetko/interview-tasks/"
+            }
+          ]
+        }
+      },
+      {
+        "name": "svc-api-2",
+        "item_type": "DYNAMIC",
+        "docker_config": {
+          "image": "svc-api-2:latest",
+          "container_name": "svc-api-2",
+          "compose_snippet": "",
+          "config_map": {}
+        },
+        "git_config": {
+          "repo": "git@github.com:YReshetko/interview-tasks.git"
+        },
+        "local_repo_config": {
+          "locations": [
+            {
+              "name": "development",
+              "path": "/home/yury/go/src/github.com/YReshetko/interview-tasks/"
+            }
+          ]
+        }
+      },
+      {
+        "name": "svc-api-3",
+        "item_type": "DYNAMIC",
+        "docker_config": {
+          "image": "svc-api-3:latest",
+          "container_name": "svc-api-3",
+          "compose_snippet": "",
+          "config_map": {}
+        },
+        "git_config": {
+          "repo": "git@github.com:YReshetko/interview-tasks.git"
+        },
+        "local_repo_config": {
+          "locations": [
+            {
+              "name": "development",
+              "path": "/home/yury/go/src/github.com/YReshetko/interview-tasks/"
+            }
+          ]
+        }
+      }
+    ],
+    "frontend": [
+      {
+        "name": "ui-1",
+        "item_type": "DYNAMIC",
+        "docker_config": {
+          "image": "ui-1:latest",
+          "container_name": "ui-1",
+          "compose_snippet": "",
+          "config_map": {}
+        },
+        "git_config": {
+          "repo": "git@github.com:YReshetko/interview-tasks.git"
+        },
+        "local_repo_config": {
+          "locations": [
+            {
+              "name": "development",
+              "path": "/home/yury/go/src/github.com/YReshetko/interview-tasks/"
+            }
+          ]
+        }
+      },
+      {
+        "name": "ui-2",
+        "item_type": "DYNAMIC",
+        "docker_config": {
+          "image": "ui-2:latest",
+          "container_name": "ui-2",
+          "compose_snippet": "",
+          "config_map": {}
+        },
+        "git_config": {
+          "repo": "git@github.com:YReshetko/interview-tasks.git"
+        },
+        "local_repo_config": {
+          "locations": [
+            {
+              "name": "development",
+              "path": "/home/yury/go/src/github.com/YReshetko/interview-tasks/"
+            }
+          ]
+        }
+      },
+      {
+        "name": "ui-3",
+        "item_type": "DYNAMIC",
+        "docker_config": {
+          "image": "ui-3:latest",
+          "container_name": "ui-3",
+          "compose_snippet": "",
+          "config_map": {}
+        },
+        "git_config": {
+          "repo": "git@github.com:YReshetko/interview-tasks.git"
+        },
+        "local_repo_config": {
+          "locations": [
+            {
+              "name": "development",
+              "path": "/home/yury/go/src/github.com/YReshetko/interview-tasks/"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
