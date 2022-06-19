@@ -8,6 +8,8 @@ import (
 	"net/http"
 )
 
+//Services struct for handling services requests
+//@Rest(path = "/api/v1/services")
 type Services struct {
 	model *model.Model
 }
@@ -18,6 +20,7 @@ func NewServices(model *model.Model) *Services {
 	}
 }
 
+// @Rest(method = "GET")
 func (s *Services) getServices(w http.ResponseWriter, r *http.Request) {
 	s.model.Services()
 
@@ -36,15 +39,4 @@ func handleErrorsOnWrite(_ int, err error) {
 	if err != nil {
 		log.Println(err)
 	}
-}
-
-func (s *Services) Handlers() map[string]http.HandlerFunc {
-	return map[string]http.HandlerFunc{
-		http.MethodGet: s.getServices,
-	}
-
-}
-
-func (s *Services) Path() string {
-	return "/api/v1/services"
 }

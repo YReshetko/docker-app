@@ -5,12 +5,14 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+
+	"github.com/YReshetko/go-annotation/annotations/rest/routing"
 )
 
 const defaultPort = "8080"
 
 type Server struct {
-	handlers        []Handler
+	handlers        []routing.Handler
 	middlewares     []mux.MiddlewareFunc
 	staticResources string
 	port            string
@@ -18,7 +20,7 @@ type Server struct {
 
 type ServerOption func(*Server)
 
-func WithHandler(handler Handler) ServerOption {
+func WithHandler(handler routing.Handler) ServerOption {
 	return func(s *Server) {
 		s.handlers = append(s.handlers, handler)
 	}
@@ -53,12 +55,12 @@ func NewServer(options ...ServerOption) *Server {
 }
 
 func (s *Server) Serve() {
-	routes := buildRoutes(s.handlers...)
-	var static http.Handler
+	router := routing.New(s.handlers...)
 	if s.staticResources != "" {
-		static = http.FileServer(http.Dir(s.staticResources))
+		static := http.FileServer(http.Dir(s.staticResources))
+		router.PathPrefix("/").Handler(static).Methods(http.MethodGet)
 	}
-	router := newMuxRouter(routes, static)
+
 	if len(s.middlewares) > 0 {
 		router = middlewares(router, s.middlewares...)
 	}
@@ -68,4 +70,24 @@ func (s *Server) Serve() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func middlewares(router *mux.Router, middlewareFuncs ...mux.MiddlewareFunc) *mux.Router {
+	_ = router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
+
+		for _, middlewareFunc := range middlewareFuncs {
+			route.Handler(middlewareFunc(route.GetHandler()))
+		}
+		return nil
+	})
+
+	_ = router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
+		p, _ := route.GetPathTemplate()
+		m, _ := route.GetMethods()
+		h := route.GetHandler()
+		fmt.Println(p, m, h)
+		return nil
+	})
+
+	return router
 }

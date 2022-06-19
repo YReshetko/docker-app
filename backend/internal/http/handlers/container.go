@@ -5,8 +5,11 @@ import (
 	"net/http"
 )
 
+//Container struct for handling container requests
+//@Rest(path = "/api/v1/containers/{container_id}")
 type Container struct{}
 
+// @Rest(method = "GET")
 func (c *Container) getContainer(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, `[
 							{"title":"Container 1","id":"1", "text":"some text 1", "buttonText": "click me 1"},
@@ -17,6 +20,7 @@ func (c *Container) getContainer(w http.ResponseWriter, r *http.Request) {
 					]`)
 }
 
+// @Rest(method = "PATCH")
 func (c *Container) patchContainer(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, `[
 							{"title":"Container 1","id":"1", "text":"some text 1", "buttonText": "click me 1"},
@@ -27,6 +31,7 @@ func (c *Container) patchContainer(w http.ResponseWriter, r *http.Request) {
 					]`)
 }
 
+// @Rest(method = "DELETE")
 func (c *Container) deleteContainer(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, `[
 							{"title":"Container 1","id":"1", "text":"some text 1", "buttonText": "click me 1"},
@@ -35,17 +40,4 @@ func (c *Container) deleteContainer(w http.ResponseWriter, r *http.Request) {
 							{"title":"Container 4","id":"4", "text":"some text 4", "buttonText": "click me 4"},
 							{"title":"Container 5","id":"5", "text":"some text 5", "buttonText": "click me 5"}
 					]`)
-}
-
-func (c *Container) Handlers() map[string]http.HandlerFunc {
-	return map[string]http.HandlerFunc{
-		http.MethodGet:    c.getContainer,
-		http.MethodPatch:  c.patchContainer,
-		http.MethodDelete: c.deleteContainer,
-	}
-
-}
-
-func (c *Container) Path() string {
-	return "/api/v1/containers/{container_id}"
 }

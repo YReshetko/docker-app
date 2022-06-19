@@ -5,8 +5,11 @@ import (
 	"net/http"
 )
 
+//Containers struct for handling containers requests
+//@Rest(path = "/api/v1/containers")
 type Containers struct{}
 
+// @Rest(method = "GET")
 func (c *Containers) getContainers(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, `[
 							{"title":"Container 1","id":"1", "text":"some text 1", "buttonText": "click me 1"},
@@ -15,14 +18,4 @@ func (c *Containers) getContainers(w http.ResponseWriter, r *http.Request) {
 							{"title":"Container 4","id":"4", "text":"some text 4", "buttonText": "click me 4"},
 							{"title":"Container 5","id":"5", "text":"some text 5", "buttonText": "click me 5"}
 					]`)
-}
-func (c *Containers) Handlers() map[string]http.HandlerFunc {
-	return map[string]http.HandlerFunc{
-		http.MethodGet: c.getContainers,
-	}
-
-}
-
-func (c *Containers) Path() string {
-	return "/api/v1/containers"
 }
