@@ -3,9 +3,10 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/YReshetko/docker-app/backend/internal/model"
 	"log"
 	"net/http"
+
+	"github.com/YReshetko/docker-app/backend/internal/model"
 )
 
 //Services struct for handling services requests
