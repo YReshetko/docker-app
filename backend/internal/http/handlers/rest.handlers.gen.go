@@ -5,6 +5,18 @@ import (
 	"net/http"
 )
 
+func (s *Container) Handlers() map[string]http.HandlerFunc {
+	return map[string]http.HandlerFunc{
+		http.MethodDelete: s.deleteContainer,
+		http.MethodGet:    s.getContainer,
+		http.MethodPatch:  s.patchContainer,
+	}
+}
+
+func (s *Container) Path() string {
+	return "/api/v1/containers/{container_id}"
+}
+
 func (s *Containers) Handlers() map[string]http.HandlerFunc {
 	return map[string]http.HandlerFunc{
 		http.MethodGet: s.getContainers,
@@ -35,16 +47,4 @@ func (s *Services) Handlers() map[string]http.HandlerFunc {
 
 func (s *Services) Path() string {
 	return "/api/v1/services"
-}
-
-func (s *Container) Handlers() map[string]http.HandlerFunc {
-	return map[string]http.HandlerFunc{
-		http.MethodGet:    s.getContainer,
-		http.MethodPatch:  s.patchContainer,
-		http.MethodDelete: s.deleteContainer,
-	}
-}
-
-func (s *Container) Path() string {
-	return "/api/v1/containers/{container_id}"
 }
